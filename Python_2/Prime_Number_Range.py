@@ -1,40 +1,26 @@
-import sys
+from sys import stdout
+from math import sqrt
 
-x='y' # Variable to store repeating condition
+def Prime(Num):
+	for x in range(2, int(sqrt(Num))+1):
+		if(Num%x == 0):return False
+	return True
 
-while((x=='y')|(x=='Y')): # loop to run program until asked to quit
-        
-        print "\n\n\nThis program is made by \"ASHWEK\" to find prime numbers within a range\n" # Intro
-        
-        try: # To handle Lower Limit Input errors
-                Lower_Limit = int(input("\n\t -> Enter the lower Limit = "))
-                
-                try: # To handle Upper Limit Errors
-                        Upper_Limit = int(input("\n\t -> Enter the upper limit = "))
-                
-                        if(Lower_Limit < 0 ):Lower_Limit = 1 # Set lower_limit as 1 if less than 1
-                        if(Upper_Limit < Lower_Limit): # if Upper_limit is less than Lower_Limit, Swap them
-                                temp = Upper_Limit
-                                Upper_Limit = Lower_Limit
-                                Lower_Limit = temp
-                        if(Lower_Limit == 0):Lower_Limit = 1 # If lower_Limit is 0, make it 1
+try:
+	Lower_Limit = int(raw_input("\n\t -> Enter the lower Limit = "))
+	try:
+		Upper_Limit = int(raw_input("\t -> Enter the upper limit = "))
+		Lower_Limit = Lower_Limit if Lower_Limit > 0 else 1
+		Upper_Limit = Upper_Limit if Upper_Limit > 0 else 1
+		if(Upper_Limit < Lower_Limit): Lower_Limit, Upper_Limit = Upper_Limit, Lower_Limit
+		Primes=0
 
-                        Primes=0 # number of prime numbers between the limit
-                
-                        print "\nPrime numbers between ", Lower_Limit, " & ", Upper_Limit, " are :\n"
+		print "\nPrime numbers between ", Lower_Limit, " & ", Upper_Limit, " are : "
 
-                        for i in range(Lower_Limit,(Upper_Limit+1)): # Loop to find prime numbers between the range
-                                flag=0
-                                for j in range(2,i):
-                                        if(i%j==0):
-                                                flag=1
-                                                break
-                                if(flag==0):
-                                        sys.stdout.write(str(i)+", ") # if it is a prime number, print it
-                                        Primes+=1 # Number of Prime numbers
-                        
-                        print "\n\nThere are ", Primes, " prime numbeer between ", Lower_Limit, " & ", Upper_Limit
-                except NameError: print "\n\n***Invalid Lower Limit Input***"
-        except NameError: print "\n\n***Invalid Upper Limit Input***"
-
-        x=raw_input("\n\nDo you want to try another range [Y/N] = ") # Asks user to continue of exit
+		for i in range(Lower_Limit,(Upper_Limit+1)):
+			if(Prime(i)):
+				stdout.write(str(i)+", ")
+				Primes+=1
+		print "\n\nThere are ", Primes, " prime numbeer between ", Lower_Limit, " & ", Upper_Limit
+	except ValueError: print "\n\t***Invalid Upper Limit Input***\n"
+except ValueError: print "\n\t***Invalid Lower Limit Input***\n"
