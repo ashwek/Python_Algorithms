@@ -1,33 +1,30 @@
-import os, sys # importing module
-
+from os import system
+from sys import exit
 choice=0 # variable to contol program termination
-while(choice!=3): # loop to continue program until asked to exit
-	try:os.system("cls") # clear WINDOWS terminal
-	except:os.system("clear") # clear LINUX Terminal
 
-	print "\n\nThis program is made by \"ASHWEK\" to find ASCII value of a character\n" # Intro 
+while(choice!=3): #loop to continue program until asked to exit
+	system("clear") #Clear Screen for Linux Terminal
+	#system("cls") #Clear Screen for Windows
+	
+	print "\n\nFind ASCII value of a character"
 	print "\t1. Number to Character" 
 	print "\t2. Character to Number" 
 	print "\t3. EXIT" 
 	
-	try : choice=int(input("Enter your choice = ")) # input Option
-	except : choice=0 # if input is invalid
+	try : choice=int(input("Enter your choice = "))
+	except : choice=0
 
-	if(choice==1): # if N-C
-		try: # to handle invalid input
-			num=int(input("\nEnter a number to find its corresponding character  = ")) # to input a Number
-			char=chr(num) # converting to character
-			print '\n',num,' is the ASCII value for ',char # printing result 
-		except: print "\n\n***Invalid Input***"  # message for invalid input
-	elif(choice==2): # if C-N
-		try: # to handle invalid input
-			char=raw_input("\n\nEnter a character to find its ASCII value = ") # to input character
-			num=ord(char) # converting to ASCII value
-			print "\nASCII value of ",char," is ",num # printing result 
-		except: print "\n\n***Invalid Input***" # message if input is invalid
-	elif(choice==3): # exit option
-		print "\n\n\t***Program Successfully Terminated***" 
-		sys.exit() # Exit program
-	else:print "\n\n***Invalid Input***" # if invalid Option
+	if(choice==1):
+		try:
+			num=int(input("\nEnter a NUMBER to find its corresponding character  = "))
+			print '\n ->', num, 'is the ASCII value for', chr(num) 
+		except: print "\n***Invalid Input***"
+	elif(choice==2):
+		try:
+			char=ord(raw_input("\nEnter a character to find its ASCII value = "))
+			print "\n -> ASCII value of", chr(char), "is", char 
+		except: print "\n***Invalid Input***"
+	elif(choice==3): exit()
+	else:print "\n***Invalid Input***"
 	
-	raw_input("\n\nPress ENTER to continue...")
+	raw_input("\nPress ENTER to continue...")
