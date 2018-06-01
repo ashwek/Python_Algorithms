@@ -1,4 +1,4 @@
-import os, sys # importing modules
+import os, sys # importing module
 
 choice=0 # variable to contol program termination
 while(choice!=3): # loop to continue program until asked to exit
