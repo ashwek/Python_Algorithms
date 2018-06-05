@@ -15,7 +15,8 @@ https://www.bigfishgames.com/blog/how-to-solve-sudoku-puzzles-quickly-and-reliab
 
 """
 
-import sys, os
+from os import system
+from sys import exc_info
 
 def Print(Sudoku):
 	for x in Sudoku: print(' '.join(map(str, x)))
@@ -72,7 +73,7 @@ def Remove_Repeating(Sudoku):
 						each-=1
 					each+=1
 			except TypeError:pass
-			except:print(sys.exc_info())
+			except:print(exc_info())
 			
 	
 def Add_List(Sudoku):
@@ -104,7 +105,7 @@ def Solve(Sudoku):
 		Single(Sudoku)	
 		Remove_Repeating(Sudoku)
 			
-os.system("clear")
+system("clear")
 
 Sudoku=[]
 print("\n\tEnter Sudoku Below (use - for blank Spots): ")
@@ -112,4 +113,3 @@ Input(Sudoku)
 Solve(Sudoku)
 print("\nSolved:")
 Print(Sudoku)
-
