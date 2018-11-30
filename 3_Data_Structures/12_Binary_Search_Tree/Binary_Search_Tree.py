@@ -20,6 +20,9 @@ class Node:         # class to create nodes
         self.left = Left            # points to left child
         self.right = Right          # points to right child
 
+    def __str__(self):
+        return str(self.value)
+
 class BST:
 
     def __init__(self):
@@ -102,6 +105,28 @@ class BST:
 
         return Ret
 
+    def search(self, find):
+        current = self.__root
+
+        while current and current.value != find :       # while current (current != None) and value is not found
+            current = current.right if(current.value < find) else current.left      # if "find" is larger than current.value, traverse Right sub-tree, else left sub-tree
+
+        return current      # return Node (None if value not found)
+
+    def maximum(self):
+        current = self.__root
+
+        while current and current.right != None :       # while current != None & current has a right child
+            current = current.right
+        return current
+
+    def minimum(self):
+        current = self.__root
+
+        while current and current.left != None :       # while current != None & current has a left child
+            current = current.left
+        return current
+
 if __name__ == "__main__":
 
     T1 = BST()
@@ -114,3 +139,13 @@ if __name__ == "__main__":
     print("  Pre-Order = ", T1.preorder())
     print(" Post-Order = ", T1.postorder())
     print("   In-Order = ", T1.inorder())
+
+    find = 10
+    Found_Node = T1.search(find)
+    if(Found_Node):
+        print("\nValue Found, Parent = ", Found_Node.parent, "left = ", Found_Node.left, "right = ", Found_Node.right)
+    else:
+        print("\n", find, "not found in tree")
+
+    print("\nMaximum = ", T1.maximum())
+    print("Minimum = ", T1.minimum())
