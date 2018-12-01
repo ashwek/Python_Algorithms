@@ -113,19 +113,39 @@ class BST:
 
         return current      # return Node (None if value not found)
 
-    def maximum(self):
-        current = self.__root
+    def maximum(self, current = -1):
+        if current == -1:           # find maximum of current sub tree, if argument is not passed, use root
+            current = self.__root
 
         while current and current.right != None :       # while current != None & current has a right child
             current = current.right
         return current
 
-    def minimum(self):
-        current = self.__root
+    def minimum(self, current = -1):
+        if current == -1:           # find minimum of current sub tree, if argument is not passed, use root
+            current = self.__root
 
         while current and current.left != None :       # while current != None & current has a left child
             current = current.left
         return current
+
+    def successor(self, node):
+
+        if node.right == None:          # if node does not have right child
+            while node.parent != None and node.parent.right == node :   # traverse to parent while Parent != None & node is right child of parent
+                node = node.parent
+            return node.parent
+        else:
+            return self.minimum(node.right)     # return Minimum from right subtree
+
+    def predecessor(self, node):
+
+        if node.left == None:
+            while node.parent != None and node.parent.left == node :
+                node = node.parent
+            return node.parent
+        else:
+            return self.maximum(node.left)      # return Maximum from left subtree
 
 if __name__ == "__main__":
 
@@ -143,6 +163,8 @@ if __name__ == "__main__":
     find = 10
     Found_Node = T1.search(find)
     if(Found_Node):
+        print("Successor of", find, " = ", T1.successor(Found_Node))
+        print("Predecessor of", find, " = ", T1.predecessor(Found_Node))
         print("\nValue Found, Parent = ", Found_Node.parent, "left = ", Found_Node.left, "right = ", Found_Node.right)
     else:
         print("\n", find, "not found in tree")
