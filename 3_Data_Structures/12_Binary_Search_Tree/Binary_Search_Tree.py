@@ -45,6 +45,34 @@ class BST:
             else:
                 parent.right = Node(parent, val)    # assign new node as Right child
 
+    def delete(self, del_node):
+
+        if del_node :
+            if( del_node.left == None ):
+                self.replace(del_node, del_node.right)
+            elif( del_node.right == None ):
+                self.replace(del_node, del_node.left)
+            else:
+                temp = self.successor(del_node)
+                if( temp != del_node.right ):
+                    self.replace(temp, temp.right)
+                    temp.right = del_node.right
+                    temp.right.parent = temp
+                self.replace(del_node, temp)
+                temp.left = del_node.left
+                temp.left.parent = temp
+            del_node.parent = del_node.left = del_node.right = None
+            return del_node
+        else:
+            return None
+
+    def replace(self, a, b):
+        if( a.parent == None ): self.__root = b
+        elif( a.parent.left == a): a.parent.left = b
+        else: a.parent.right = b
+
+        if( b != None ): b.parent = a.parent
+
     def preorder(self, current = -1):
         if (current == -1 ): current = self.__root      # if current == -1 (no argument passed), current = root
 
@@ -163,11 +191,15 @@ if __name__ == "__main__":
     find = 10
     Found_Node = T1.search(find)
     if(Found_Node):
-        print("Successor of", find, " = ", T1.successor(Found_Node))
+        print("\nSuccessor of", find, " = ", T1.successor(Found_Node))
         print("Predecessor of", find, " = ", T1.predecessor(Found_Node))
-        print("\nValue Found, Parent = ", Found_Node.parent, "left = ", Found_Node.left, "right = ", Found_Node.right)
+        print("Value Found, Parent = ", Found_Node.parent, "left = ", Found_Node.left, "right = ", Found_Node.right)
     else:
         print("\n", find, "not found in tree")
 
     print("\nMaximum = ", T1.maximum())
     print("Minimum = ", T1.minimum())
+
+    delete_value = int(input("\nEnter value to delete = "))
+    T1.delete(T1.search(delete_value))
+    print("\nLevel-Order = ", T1.levelorder())
