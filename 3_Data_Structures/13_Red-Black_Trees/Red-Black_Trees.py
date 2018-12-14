@@ -60,7 +60,6 @@ class RBT:
 
             self.__root.colour = "B"
 
-
     def insert(self, value):
         if( self.__root == None ): self.__root = Node(RBT.__nill, value, RBT.__nill, RBT.__nill, "B")
         else:
@@ -75,7 +74,7 @@ class RBT:
 
             self.insert_fix_up(new_node)
 
-    def left_rotate(self, current = None):
+    def left_rotate(self, current):
 
         change = current.right
         if( change != RBT.__nill ):
@@ -105,7 +104,7 @@ class RBT:
 
     def level_order(self, current = []):
 
-        if( self.__root == RBT.__nill ): return []
+        if( self.__root == None ): return []
 
         Ret = []
         nxt_lvl = []
@@ -123,6 +122,44 @@ class RBT:
 
         return Ret
 
+    def in_order(self, current = None):
+
+        if( self.__root == None ): return []
+
+        if( current == None ): current = self.__root
+
+        Ret = []
+        if( current.left != RBT.__nill ): Ret.extend(self.in_order(current.left))
+        Ret.append((current.value, current.colour))
+        if( current.right != RBT.__nill ): Ret.extend(self.in_order(current.right))
+
+        return Ret
+
+    def pre_order(self, current = None):
+
+        if( self.__root == None ): return []
+
+        if( current == None ): current = self.__root
+
+        Ret = [(current.value, current.colour)]
+        if( current.left != RBT.__nill ): Ret.extend(self.pre_order(current.left))
+        if( current.right != RBT.__nill ): Ret.extend(self.pre_order(current.right))
+
+        return Ret
+
+    def post_order(self, current = None):
+
+        if( self.__root == None ): return []
+
+        if( current == None ): current = self.__root
+
+        Ret = []
+        if( current.left != RBT.__nill ): Ret.extend(self.post_order(current.left))
+        if( current.right != RBT.__nill ): Ret.extend(self.post_order(current.right))
+        Ret.append((current.value, current.colour))
+
+        return Ret
+
 if __name__ == "__main__":
     A = RBT()
 
@@ -131,3 +168,6 @@ if __name__ == "__main__":
         A.insert(Temp)
 
     print(A.level_order())
+    print(A.in_order())
+    print(A.pre_order())
+    print(A.post_order())
