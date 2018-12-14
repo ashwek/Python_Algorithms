@@ -10,6 +10,7 @@ https://www.cs.usfca.edu/~galles/visualization/RedBlack.html
 """
 
 from random import randint
+from random import choice
 
 class Node:
 
@@ -171,6 +172,20 @@ class RBT:
             elif( value > temp.value ): temp = temp.right
         return None
 
+    def successor(self, current):
+        if( current.right == RBT.__nill ): return None
+
+        current = current.right
+        while( current.left != RBT.__nill ): current = current.left
+        return current
+
+    def predecessor(self, current):
+        if( current.left == RBT.__nill ): return None
+
+        current = current.left
+        while( current.right != RBT.__nill ): current = current.right
+        return current
+
 if __name__ == "__main__":
     A = RBT()
 
@@ -182,3 +197,7 @@ if __name__ == "__main__":
     print(A.in_order())
     print(A.pre_order())
     print(A.post_order())
+    Srch = choice(A.level_order())[0]
+    print("\nSearch Node with value = ", Srch, '->', A.search(Srch))
+    print('successor of', Srch, '->', A.successor(A.search(Srch)))
+    print('predecessor of', Srch, '->', A.predecessor(A.search(Srch)))
