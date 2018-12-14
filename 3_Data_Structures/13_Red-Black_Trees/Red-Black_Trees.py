@@ -160,6 +160,17 @@ class RBT:
 
         return Ret
 
+    def search(self, value):
+
+        if( self.__root == None ): return None
+
+        temp = self.__root
+        while( temp != RBT.__nill ):
+            if( temp.value == value ): return temp
+            elif( value < temp.value ): temp = temp.left
+            elif( value > temp.value ): temp = temp.right
+        return None
+
 if __name__ == "__main__":
     A = RBT()
 
