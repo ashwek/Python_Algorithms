@@ -75,6 +75,43 @@ class RBT:
 
             self.insert_fix_up(new_node)
 
+    def delete_fix_up(self, changed):
+        ## >>> TODO <<< ##
+        pass
+
+    def replace(self, orig, change):
+        if( orig.parent == RBT.__nill ): self.__root = change
+        elif( orig.parent.left == orig ): orig.parent.left = change
+        else: orig.parent.right = change
+
+        change.parent = orig.parent
+
+    def delete(self, current):
+
+        colour = current.colour
+
+        if( current.left == RBT.__nill ):
+            self.replace(current, current.right)
+            temp = current.right
+        elif( current.right == RBT.__nill ):
+            self.replace(current, current.left)
+            temp = current.left
+        else:
+            changed = self.successor(current)
+            temp = changed.right
+            colour = changed.colour
+            if( changed.parent != current ):
+                self.replace(changed, changed.right)
+                changed.right = current.right
+                changed.right.parent = changed
+            self.replace(current, changed)
+            changed.left = current.left
+            changed.left.parent = changed
+            changed.colour = current.colour
+
+        if( colour == 'B'):
+            self.delete_fix_up(temp)
+
     def left_rotate(self, current):
 
         change = current.right
@@ -201,3 +238,8 @@ if __name__ == "__main__":
     print("\nSearch Node with value = ", Srch, '->', A.search(Srch))
     print('successor of', Srch, '->', A.successor(A.search(Srch)))
     print('predecessor of', Srch, '->', A.predecessor(A.search(Srch)))
+
+    print("\nDelete Node with value = ", Srch)
+    A.delete(A.search(Srch))
+    print(A.level_order())
+    print("-> not fixed-up")
